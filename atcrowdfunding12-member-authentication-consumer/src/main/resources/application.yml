@@ -1,0 +1,12 @@
+server:
+  port: 4000
+spring:
+  application:
+    name: kjq-crowd-auth
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
