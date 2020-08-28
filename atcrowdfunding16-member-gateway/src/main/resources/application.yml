@@ -1,0 +1,23 @@
+server:
+  port: 80
+spring:
+  application:
+    name: kjq-crowd-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: payment_routh
+          uri: lb://kjq-crowd-auth
+          predicates:
+            - Path=/**
+      globalcors:
+        default-filters:  #全局用于配置所有路由共享过滤器
+          - StripPrefix=1 #去掉- Path=/userapi 前缀
+          - PreserveHostHeader #发送原主机头
+

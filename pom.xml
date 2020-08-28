@@ -20,6 +20,7 @@
     <module>atcrowdfunding16-member-gateway</module>
     <module>atcrowdfunding17-member-api</module>
     <module>atcrowdfunding18-common-util</module>
+      <module>pro01-short-message</module>
   </modules>
 
   <packaging>pom</packaging>

@@ -10,3 +10,13 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+short:
+  message:
+    app-code: afa39d65a7eb4de98659a2df09f3e0f8
+    host: http://smsmsgs.market.alicloudapi.com
+    path: /smsmsgs
+    sign: 175622
+    skin: 1
+ribbon:
+  eager-load:
+    clients:

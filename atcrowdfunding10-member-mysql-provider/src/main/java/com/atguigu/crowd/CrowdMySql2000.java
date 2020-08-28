@@ -1,9 +1,9 @@
 package com.atguigu.crowd;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author 孔佳齐丶
@@ -13,8 +13,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-//扫描mybatis接口所在的包? 待定
-@MapperScan(value = "com.atguigu.crowd.mapper")
+@EnableFeignClients("com.atguigu.crowd.api")
 public class CrowdMySql2000 {
     public static void main(String[] args) {
         SpringApplication.run(CrowdMySql2000.class, args);

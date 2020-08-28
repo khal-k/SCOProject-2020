@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PortalHandler {
     @RequestMapping("/")
     public String showPortalPage(){
-        //显示首页
+        //显示首页,实际开发中要价在数据
         return "portal";
     }
 }
