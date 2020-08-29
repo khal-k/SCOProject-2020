@@ -21,6 +21,8 @@
     <module>atcrowdfunding17-member-api</module>
     <module>atcrowdfunding18-common-util</module>
       <module>pro01-short-message</module>
+    <module>atcrowdfunding20-session-b</module>
+    <module>atcrowdfunding20-session-a</module>
   </modules>
 
   <packaging>pom</packaging>

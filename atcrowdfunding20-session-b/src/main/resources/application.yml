@@ -1,0 +1,7 @@
+spring:
+  redis:
+    host: 192.168.136.212  #redis服务器主机地址
+  session:
+    store-type: redis      #存储方式为redis
+server:
+  port: 7002

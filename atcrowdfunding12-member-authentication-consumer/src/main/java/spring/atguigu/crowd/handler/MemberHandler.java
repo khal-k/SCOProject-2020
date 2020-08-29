@@ -3,6 +3,7 @@ package spring.atguigu.crowd.handler;
 import com.atguigu.crowd.api.MySqlRemoteService;
 import com.atguigu.crowd.api.RedisRemoteService;
 import com.atguigu.crowd.entity.po.MemberPO;
+import com.atguigu.crowd.entity.vo.MemberLoginVO;
 import com.atguigu.crowd.entity.vo.MemberVO;
 import constant.CrowdConstant;
 import org.springframework.beans.BeanUtils;
@@ -17,6 +18,7 @@ import spring.atguigu.crowd.config.ShortMessageProperties;
 import util.CrowdUtil;
 import util.ResultEntity;
 
+import javax.servlet.http.HttpSession;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +36,54 @@ public class MemberHandler {
     private RedisRemoteService redisRemoteService;
     @Autowired
     private MySqlRemoteService mySqlRemoteService;
+
+    ///auth/member/loginout
+    @RequestMapping("/auth/member/loginOut")
+     public String LoginOut(HttpSession session){
+        session.invalidate();
+        return "member-login";
+     }
+
+    @RequestMapping("auth/member/do/login")
+    public String Login(@RequestParam("loginAcct") String loginAcct,
+                        @RequestParam("userPswd") String userPswd,
+                        ModelMap modelMap,
+                        HttpSession session){
+        //1.调用远程接口实现根据账号查询用户
+        ResultEntity<MemberPO> resultEntity = mySqlRemoteService.getMemberPOByLoginAcctRemote(loginAcct);
+
+        //2.如果查询四百
+        if(ResultEntity.FAILED.equals(resultEntity.getResult())){
+            modelMap.addAttribute(CrowdConstant.ATTR_NAME_EXCEPTION,resultEntity.getMessage());
+            return "member-login";
+        }
+
+        //查询成功,得到数据
+        MemberPO memberPO = resultEntity.getData();
+
+        //3.如果查询数据为空
+        if(memberPO==null){
+            modelMap.addAttribute(CrowdConstant.ATTR_NAME_EXCEPTION,CrowdConstant.MESSAGE_LOGIN_FAILED);
+            return "member-login";
+        }
+
+        //加密
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        //4.数据不为空,比较密码
+        String realPassword = memberPO.getUserPswd();
+        //颜值随机,每次加密不一样,使用matches方法
+        //String fromPassword = passwordEncoder.encode(userPswd);
+        if (passwordEncoder.matches(userPswd,realPassword)) {
+            //创建对象并放入session域
+            MemberLoginVO memberLoginVO = new MemberLoginVO(memberPO.getId(),memberPO.getUserName(),memberPO.getEmail());
+            session.setAttribute(CrowdConstant.ATTR_NAME_LOGIN_MEMBER,memberLoginVO);
+            return "member-center";
+        }else{
+            modelMap.addAttribute(CrowdConstant.ATTR_NAME_EXCEPTION,CrowdConstant.MESSAGE_LOGIN_FAILED);
+            return "member-login";
+        }
+    }
 
     /**
      * 会员注册

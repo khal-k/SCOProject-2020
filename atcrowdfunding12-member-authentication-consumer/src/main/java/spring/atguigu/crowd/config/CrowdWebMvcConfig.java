@@ -23,5 +23,7 @@ public class CrowdWebMvcConfig implements WebMvcConfigurer {
         registry.addViewController(urlPath).setViewName(viewName);
         ///auth/member/to/login
         registry.addViewController("/auth/member/to/login/page").setViewName("member-login");
+        //跳转用户中心的请求
+        registry.addViewController("/auth/member/to/center/page").setViewName("member-center");
     }
 }
