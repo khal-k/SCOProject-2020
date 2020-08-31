@@ -45,6 +45,7 @@ public class MemberServiceImp implements MemberService {
         return list.get(0);
     }
 
+    //rollbackFor 如果类加了这个注解，那么这个类里面的方法抛出异常，就会回滚，数据库里面的数据也会回滚。
     @Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class,readOnly = false)
     @Override
     public void saveMember(MemberPO memberPO) {

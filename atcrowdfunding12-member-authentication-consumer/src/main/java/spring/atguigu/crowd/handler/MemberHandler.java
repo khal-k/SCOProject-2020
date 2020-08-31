@@ -44,6 +44,14 @@ public class MemberHandler {
         return "member-login";
      }
 
+    /**
+     * 会员登录
+     * @param loginAcct
+     * @param userPswd
+     * @param modelMap
+     * @param session
+     * @return
+     */
     @RequestMapping("auth/member/do/login")
     public String Login(@RequestParam("loginAcct") String loginAcct,
                         @RequestParam("userPswd") String userPswd,
@@ -54,7 +62,7 @@ public class MemberHandler {
 
         //2.如果查询四百
         if(ResultEntity.FAILED.equals(resultEntity.getResult())){
-            modelMap.addAttribute(CrowdConstant.ATTR_NAME_EXCEPTION,resultEntity.getMessage());
+            modelMap.addAttribute(CrowdConstant.ATTR_NAME_EXCEPTION_LOGIN,resultEntity.getMessage());
             return "member-login";
         }
 
@@ -63,7 +71,7 @@ public class MemberHandler {
 
         //3.如果查询数据为空
         if(memberPO==null){
-            modelMap.addAttribute(CrowdConstant.ATTR_NAME_EXCEPTION,CrowdConstant.MESSAGE_LOGIN_FAILED);
+            modelMap.addAttribute(CrowdConstant.ATTR_NAME_EXCEPTION_LOGIN,CrowdConstant.MESSAGE_LOGIN_FAILED);
             return "member-login";
         }
 
@@ -78,9 +86,9 @@ public class MemberHandler {
             //创建对象并放入session域
             MemberLoginVO memberLoginVO = new MemberLoginVO(memberPO.getId(),memberPO.getUserName(),memberPO.getEmail());
             session.setAttribute(CrowdConstant.ATTR_NAME_LOGIN_MEMBER,memberLoginVO);
-            return "member-center";
+            return "redirect:http://www.crowd.com/auth/member/to/center/page";
         }else{
-            modelMap.addAttribute(CrowdConstant.ATTR_NAME_EXCEPTION,CrowdConstant.MESSAGE_LOGIN_FAILED);
+            modelMap.addAttribute(CrowdConstant.ATTR_NAME_EXCEPTION_LOGIN,CrowdConstant.MESSAGE_LOGIN_FAILED);
             return "member-login";
         }
     }

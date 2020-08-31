@@ -1,0 +1,23 @@
+server:
+  port: 5000
+spring:
+  application:
+    name: kjq-crowd-project
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: 192.168.136.212
+  session:
+    store-type: redis
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+aliyun:
+  oss:
+    access-key-id: LTAI4GF6EhZwnVKpV1b9Rbcp
+    access-key-secret: QqQx25KOpmxUYTNhRVqjuqjLy83Jcj
+    bucket-name: kong-scwproject-2020-8-29
+    bucket-domain: http://kong-scwproject-2020-8-29.oss-cn-beijing.aliyuncs.com
+    end-point: http://oss-cn-beijing.aliyuncs.com

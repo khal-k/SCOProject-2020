@@ -7,17 +7,24 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-      routes:
-        - id: payment_routh
-          uri: lb://kjq-crowd-auth
-          predicates:
-            - Path=/**
-      globalcors:
-        default-filters:  #全局用于配置所有路由共享过滤器
-          - StripPrefix=1 #去掉- Path=/userapi 前缀
-          - PreserveHostHeader #发送原主机头
+  redis:
+    host: 192.168.136.212
+  session:
+    store-type: redis
+zuul:
+  routes:
+    crowd-portal:
+      service-id: kjq-crowd-auth
+      path: /**
+    crowd-project-consumer:
+      service-id: kjq-crowd-project
+      path: /project/**
+  ignored-services: "*"
+  sensitive-headers: "*"
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+
+
+
 
