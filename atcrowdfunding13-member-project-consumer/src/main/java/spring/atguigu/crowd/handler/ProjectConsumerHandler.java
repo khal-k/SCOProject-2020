@@ -1,14 +1,12 @@
 package spring.atguigu.crowd.handler;
 
 import com.atguigu.crowd.api.MySqlRemoteService;
-import com.atguigu.crowd.entity.vo.MemberConfirmInfoVO;
-import com.atguigu.crowd.entity.vo.MemberLoginVO;
-import com.atguigu.crowd.entity.vo.ProjectVO;
-import com.atguigu.crowd.entity.vo.ReturnVO;
+import com.atguigu.crowd.entity.vo.*;
 import constant.CrowdConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,12 +34,28 @@ public class ProjectConsumerHandler {
     @Autowired
     private MySqlRemoteService mySqlRemoteService;
 
+    //get/project/detail/'
+    @RequestMapping("/get/project/detail/{projectId}")
+    public String getProjectDetail(@PathVariable("projectId") Integer projectId,ModelMap modelMap){
+        ResultEntity<DetailProjectVO> resultEntity = mySqlRemoteService.getDate(projectId);
+
+        if(ResultEntity.SUCCESS.equals(resultEntity.getResult())){
+            DetailProjectVO detailProjectVO = resultEntity.getData();
+
+            modelMap.addAttribute("detailProjectVo",detailProjectVO);
+
+        }
+        return "project-detail";
+    }
+
     ///create/confirm
     @RequestMapping("/create/confirm")
     String projectConfirm(ModelMap modelMap ,HttpSession session, MemberConfirmInfoVO memberConfirmInfoVO){
 
+
         //1.从session域中获取ProjectVo对象
         ProjectVO projectVO = (ProjectVO) session.getAttribute(CrowdConstant.ATTR_NAME_TEMPLE_PROJECT);
+
 
         //2.将表单数据确认信息设置到projectVo中
         projectVO.setMemberConfirmInfoVO(memberConfirmInfoVO);
@@ -130,7 +144,7 @@ public class ProjectConsumerHandler {
 
     ///create/confirm/page.html
 
-    //图片和图片详情提交到OSS阿里云存储
+    //图存片和图片详情提交到OSS阿里云储
     @RequestMapping("create/project/information")
     public String saveProjectBasicInfo(
             // 接受除了图片的其他普通数据
@@ -207,8 +221,11 @@ public class ProjectConsumerHandler {
             String detailEntityResult = detailUpLoadResultEntity.getResult();
 
             if (ResultEntity.SUCCESS.equals(detailEntityResult)) {
+
+                String detailPicturePath = detailUpLoadResultEntity.getData();
+
                 //7.将上传成功的图片信息放入集合
-                detailPictureArrayList.add(detailEntityResult);
+                detailPictureArrayList.add(detailPicturePath);
             }else {
                 //6.如果上传失败返回并提示错误消息
                 modelMap.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, CrowdConstant.MESSAGE_DETAIL_PIC_UPLOAD_FAILED);

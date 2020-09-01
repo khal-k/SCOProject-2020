@@ -1,0 +1,17 @@
+server:
+  port: 6000
+spring:
+  application:
+    name: kjq-crowd-order
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: 192.168.136.212
+  session:
+    store-type: redis
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+

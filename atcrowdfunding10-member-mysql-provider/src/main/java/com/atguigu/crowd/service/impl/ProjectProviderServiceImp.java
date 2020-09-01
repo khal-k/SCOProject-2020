@@ -1,13 +1,9 @@
 package com.atguigu.crowd.service.impl;
-
 import com.atguigu.crowd.entity.po.MemberConfirmInfoPO;
 import com.atguigu.crowd.entity.po.MemberLaunchInfoPO;
 import com.atguigu.crowd.entity.po.ProjectPO;
 import com.atguigu.crowd.entity.po.ReturnPO;
-import com.atguigu.crowd.entity.vo.MemberConfirmInfoVO;
-import com.atguigu.crowd.entity.vo.MemberLauchInfoVO;
-import com.atguigu.crowd.entity.vo.ProjectVO;
-import com.atguigu.crowd.entity.vo.ReturnVO;
+import com.atguigu.crowd.entity.vo.*;
 import com.atguigu.crowd.mapper.*;
 import com.atguigu.crowd.service.api.ProjectProviderService;
 import org.springframework.beans.BeanUtils;
@@ -20,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 /**
  * @author 孔佳齐丶
  * @create 2020-08-30 10:03
@@ -48,9 +43,83 @@ public class ProjectProviderServiceImp implements ProjectProviderService {
     @Autowired
     private ReturnPOMapper returnPOMapper;
 
+    /**
+     * 遍历project对象
+     * @return
+     */
+    @Override
+    public List<PortalTypeVO> getPortalTypeVO() {
+        return projectPOMapper.selectPortalTypeVOList();
+    }
+
+    @Override
+    public DetailProjectVO getDetailProjectVO(Integer projectId) {
+
+        //1.查询得到detailProjectVO对象
+        DetailProjectVO detailProjectVO = projectPOMapper.selectDetailProjectVO(projectId);
+
+        //2.获取状态,
+        Integer status = detailProjectVO.getStatus();
+         switch (status){
+             case 0:
+                 detailProjectVO.setStatusText("审核中");
+                 break;
+             case 1:
+                 detailProjectVO.setStatusText("众筹中");
+                 break;
+             case 2:
+                 detailProjectVO.setStatusText("众筹成功");
+                 break;
+             case 3:
+                 detailProjectVO.setStatusText("已关闭");
+                 break;
+
+             default:
+                break;
+         }
+
+         //3.根据deployDate计算lastDay
+        String deployDate = detailProjectVO.getDeployDate();
+
+         //获取当前日期
+        Date currentDay = new Date();
+
+        //把众筹日期转换为Calendar类型
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date deployDay = simpleDateFormat.parse(deployDate);
+
+            //获取当前日期的时间戳
+            long currentDayTimeStamp = currentDay.getTime();
+
+            //获取众筹日期的时间戳
+            long deployDayTime = deployDay.getTime();
+
+            //两个时间戳相减得到已经过去的时间
+            long passDays = (currentDayTimeStamp-deployDayTime)/1000/60/60/24;
+
+            //获取总的众筹的天数
+            Integer totalDays = detailProjectVO.getDay();
+
+            //使用总的众筹时间减已经过去的天数
+            Integer lastDay = (int) (totalDays-passDays);
+
+            //剩余的天数
+            detailProjectVO.setLastDay(lastDay);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return detailProjectVO;
+    }
+
     @Override
     //rollbackFor 如果类加了这个注解，那么这个类里面的方法抛出异常，就会回滚，数据库里面的数据也会回滚。
     @Transactional(readOnly = false,propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)
+    /**
+     * 保存project
+     */
     public void saveProject(ProjectVO projectVO, Integer memberId) {
 
     //一 保存ProjectPo对象
@@ -155,6 +224,8 @@ public class ProjectProviderServiceImp implements ProjectProviderService {
         memberConfirmInfoPOMapper.insert(memberConfirmInfoPO);
 
     }
+
+
 }
 
 

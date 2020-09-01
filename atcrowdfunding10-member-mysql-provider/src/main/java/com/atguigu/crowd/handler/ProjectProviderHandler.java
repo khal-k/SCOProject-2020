@@ -1,13 +1,14 @@
 package com.atguigu.crowd.handler;
 
+import com.atguigu.crowd.entity.vo.DetailProjectVO;
+import com.atguigu.crowd.entity.vo.PortalTypeVO;
 import com.atguigu.crowd.entity.vo.ProjectVO;
 import com.atguigu.crowd.service.api.ProjectProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import util.ResultEntity;
+
+import java.util.List;
 
 /**
  * @author 孔佳齐丶
@@ -19,6 +20,39 @@ public class ProjectProviderHandler {
 
     @Autowired
     private ProjectProviderService projectProviderService;
+
+    /**
+     * 根据portal页面的项目id获取得到该对象的所有详细信息
+     * @param projectId
+     * @return
+     */
+    @RequestMapping("/get/project/detail/remote/{projectId}")
+    public ResultEntity<DetailProjectVO> getDate(@PathVariable("projectId") Integer projectId){
+        DetailProjectVO detailProjectVO = null;
+        try {
+            detailProjectVO = projectProviderService.getDetailProjectVO(projectId);
+            return  ResultEntity.successWithData(detailProjectVO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultEntity.failed(e.getMessage());
+        }
+    }
+
+    /**
+     * 得到所有peoject对象
+     * @return
+     */
+    @RequestMapping("/get/portal/type/project/data/remote")
+    ResultEntity<List<PortalTypeVO>> getPortalTypeProjectData(){
+
+        try {
+            List<PortalTypeVO> portalTypeVOList = projectProviderService.getPortalTypeVO();
+            return ResultEntity.successWithData(portalTypeVOList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultEntity.failed(e.getMessage());
+        }
+    }
 
     /**
      * 处理远程调用将Projectvo存入到mysql数据库

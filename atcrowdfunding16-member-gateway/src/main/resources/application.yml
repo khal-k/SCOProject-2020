@@ -19,6 +19,9 @@ zuul:
     crowd-project-consumer:
       service-id: kjq-crowd-project
       path: /project/**
+    crowd-project-order:
+      service-id: kjq-crowd-order
+      path: /order/**
   ignored-services: "*"
   sensitive-headers: "*"
 ribbon:

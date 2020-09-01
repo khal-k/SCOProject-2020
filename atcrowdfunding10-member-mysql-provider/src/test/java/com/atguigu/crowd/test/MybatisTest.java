@@ -1,7 +1,8 @@
+package com.atguigu.crowd.test;
+
 import com.atguigu.crowd.CrowdMySql2000;
 import com.atguigu.crowd.entity.po.MemberPO;
 import com.atguigu.crowd.mapper.MemberPOMapper;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -31,6 +32,17 @@ public class MybatisTest {
 
     @Autowired
     private MemberPOMapper memberPOMapper;
+
+/*    @Autowired
+    private ProjectPOMapper projectPOMapper;
+
+    @Test
+    public void TestProjectMapper(){
+        List<PortalTypeVO> portalTypeVOS = projectPOMapper.selectPortalTypeVOList();
+        for (PortalTypeVO a:portalTypeVOS) {
+            System.out.println(a);
+        }
+    }*/
 
 
 
