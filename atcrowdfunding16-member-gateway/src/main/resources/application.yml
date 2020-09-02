@@ -22,6 +22,9 @@ zuul:
     crowd-project-order:
       service-id: kjq-crowd-order
       path: /order/**
+    crowd-project-pay:
+      service-id: kjq-crowd-pay
+      path: /pay/**
   ignored-services: "*"
   sensitive-headers: "*"
 ribbon:

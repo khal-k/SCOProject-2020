@@ -1,0 +1,26 @@
+server:
+  port: 7000
+spring:
+  application:
+    name: kjq-crowd-pay
+  redis:
+    host: 192.168.136.212
+  session:
+    store-type: redis
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+ali:
+  pay:
+    alipay-public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgUiM/nSxYOLqpsigTPtFS3rlwXE4rM0U+e84+vmev0qkLR0kx0dT9VWlLxf77MG0GCFxXFsetgcADV6DslVyYssXcKZRiC/l9qPj9joi89tDziPrPjtRo5odAevOBo6rMeTSM2ccVO+pgd0X9Un19KgDLveHExBwuGzxr0K/8Jddhifg+4iiZxvhzdkwOKe5qq/ubF+zvqlr/DYZKtDMuyCbGIG31p5njAWYXlesMaSbFi5SNdOXZ+71+1bJwH7nqWMggzgAchFXzAycIDlnDtGXt/xMy9DZe5vKeN7VJyf0HTXQXJxyvYY7fNHI41osZW1CiYS6M7V2gVe7jOh6CwIDAQAB
+    app-id: 2021000118641401
+    charset: utf-8
+    gateway-url: https://openapi.alipaydev.com/gateway.do
+    merchant-private-key: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCaym+ayjxxaRzgZGgtvyN5cKPyqt1vDtR3XpB0K7xNkz/Ql32SzgUgGI+sI85AAOyAfhd0xNCX8jp2P7MQKyqPNGgYJVXx4FQvZgRtKe7cGxHyvVsHQTc7HX3KwfSvdePBE7l8/XqKM6QMcrxpGYxMzZrTvNDdBiCbdgJBeA4eiO4X38AYOGBBWnp2YM5knUWW0aBNQO4gmI+PELCxbD5Wwj77GvpIK2qDOLZqQsxjoTfLKMkDskn8gHVDqrF/ZiRdFMN0+pdOG5LRzQHPs8JguPs7FG2qfEGANBHdqWnGAXlsB9abG/Lwip3+OiE6piqL268cu9sVqWzinaKeAPfTAgMBAAECggEAYp47AKl8XN0VMrmFzi+K0GI9cev+bDVMlEjBS+JZdCsuax05OgDcLxi24HtnekucYjjzhMeoBkajjJcE5HY8BUTkVQ3kddfwiso6Y7plngH5K2gMyNB5+cXOURHFbMx1MJv6f3GXUtmX2P54n5VRV9VeoSwY/dhbifBje4abqEOjEZWFSHUrIFYAEXJfc9oRIxEApAKOlCFnBODS4XfZQl/WYME3Sh5OIHoJXYOLeb9IwKZbfc8lbu+OJljqbMVgp0ANnklxlJz+OC5x1VDZBTCVCdU41M1rP5HmcY5P5NXtlDmKMGD7TS0ScS1MvW7zPeuzFrNMQpdxZukN7lXP4QKBgQDUNqdzESrK59BBSBWjQA5OBMQ0uBcDaz83fP8VFi2zCwxv0EweeARCbbUaCJPqhwWqvX4dTlLYE/bNd+5ZwyYpYuqECnvQXaqrk/ilXwzW21tVVDs30d+K7iZLXc7LE0KcitblQi3a0zQIHxK3i8Yqe6zsepDOhGe2+KfgbyeOeQKBgQC6uqbBHWeKy4LWx37+6Uw3olLZ5n4CEFj+XsIWm5VLoObj/0qoldYA0LvfCsyWdxh9DS6AeHlu89/Q4yy40WELBlMsh6xIht8TLrGcEhGZlYSHyHLaVRwX9sHMUKn9sxDCmcGlyaArVCLaZ3aXS1som/q2gOw2EE7kgitKYlP1qwKBgQCnc0zkJhqvKwYQTRIN1CC1fVtZAh3eq8ShQzeAaxS6X7B7llBKBofN5wVtOnGFMO/Oz2FxPHlwWSh47vaby7oUFCJa+G7EdvSSGNutmffmngZOqX1kyW1sEgkTlTz0zwjTv1ZcZsEKF3fKJMK/JELFCPvlSb1zx9SS81h8Zxk+eQKBgBDyd8f3HzqdldZgbMo96kjyVoqoPK97RFhxyTO8EyS2Cb6PoPsD/lQ8nZB0rnTJglN3Ks1GId9MCvguZhSwDBqwDERyW9SJSR24ky4TBb3msAySyLnAF7ilEJm2iHcaFV9UDRs63WqRTEh+M2kv0aox3eNKeCW//SkIF1285tnZAoGAHI/Jb912yWh9wBoj24pCxTUuxn+eANkSbbZ1xXA301vB7HBvT7TXpJZir5pP3VSmSlVukp7LLDP7c04sUiXErpC1h5QBt3PPzs3DpSEtKkGKMtDuN39QRFY0y1SHkRGBRvNIr10XkM1FuzmJuqbYqkPvlJifQekVB9E82Q5AmTY=
+    notify-url: http://7wz8qj.natappfree.cc/pay/notify
+    return-url: http://www.crowd.com/pay/return
+    sign-type: RSA2
+
+
